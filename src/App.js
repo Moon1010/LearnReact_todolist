@@ -70,6 +70,26 @@ function App() {
     setIsDisplayForm(!isDisplayForm);
   };
 
+  const onUpdateStatus = (id) => {
+    let tasks = allState;
+    let index = findIndexState(id);
+    if (index !== -1) {
+      tasks[index].status = !tasks[index].status;
+      setAllState(tasks);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+  };
+
+  const findIndexState = (id) => {
+    let result = -1;
+    allState.forEach((task, index) => {
+      if (task.id === id) {
+        result = index;
+      }
+    });
+    return result;
+  };
+
   return (
     <div className="container">
       <div className="text-center">
@@ -106,7 +126,7 @@ function App() {
           <Control />
           <div className="row mt-15">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              <TaskList tasks={allState} />
+              <TaskList tasks={allState} onUpdateStatus={onUpdateStatus} />
             </div>
           </div>
         </div>

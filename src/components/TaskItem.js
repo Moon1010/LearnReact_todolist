@@ -12,6 +12,8 @@ const TaskItem = (props) => {
               ? "label label-danger"
               : "label label-success"
           }
+          onClick={() => props.onUpdateStatus(props.task.id)}
+          style={{ cursor: "pointer" }}
         >
           {props.task.status === true ? "Kích hoạt" : "Ẩn"}
         </span>

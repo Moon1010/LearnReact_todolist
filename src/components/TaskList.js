@@ -3,7 +3,14 @@ import TaskItem from "./TaskItem";
 
 const TaskList = (props) => {
   const itemTasks = props.tasks.map((task, index) => {
-    return <TaskItem key={task.id} index={index} task={task} />;
+    return (
+      <TaskItem
+        key={task.id}
+        index={index}
+        task={task}
+        onUpdateStatus={props.onUpdateStatus}
+      />
+    );
   });
   return (
     <table className="table table-bordered table-hover mt-15">
