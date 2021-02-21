@@ -2,10 +2,10 @@ import React from "react";
 import Search from "./Search";
 import Sort from "./Sort";
 
-const Control = () => {
+const Control = (props) => {
   return (
     <div className="row mt-15">
-      <Search />
+      <Search onSearch={props.onSearch} />
       <Sort />
     </div>
   );

@@ -8,11 +8,12 @@ import TaskItem from "./components/TaskItem";
 function App() {
   const [allState, setAllState] = useState([]);
   const [editState, setEditState] = useState({});
-  // ({
-  //   id: "",
-  //   name: "",
-  //   status: true,
-  // });
+  const [filterState, setFilterState] = useState({
+    name: "",
+    status: -1,
+  });
+  const [keyWord, setKeyWord] = useState();
+
   const [isDisplayForm, setIsDisplayForm] = useState(false);
   const s4 = () => {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -139,6 +140,31 @@ function App() {
     setEditState(editTask);
   };
 
+  const onFilter = (filterName, filterStatus) => {
+    filterStatus = parseInt(filterStatus, 10);
+    setFilterState({ name: filterName.toLowerCase(), status: filterStatus });
+  };
+
+  let tasks = allState;
+  if (filterState) {
+    if (filterState.name) {
+      tasks = tasks.filter((task) => {
+        return task.name.toLowerCase().indexOf(filterState.name) !== -1;
+      });
+    }
+    tasks = tasks.filter((task) => {
+      if (filterState.status === -1) {
+        return task;
+      } else {
+        return task.status === (filterState.status === 1 ? true : false);
+      }
+    });
+  }
+
+  const onSearch = (keyword) => {
+    console.log(keyword);
+  };
+
   return (
     <div className="container">
       <div className="text-center">
@@ -172,14 +198,15 @@ function App() {
           >
             Generate
           </button>
-          <Control />
+          <Control onSearch={onSearch} />
           <div className="row mt-15">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               <TaskList
-                tasks={allState}
+                tasks={tasks}
                 onUpdateStatus={onUpdateStatus}
                 onDelete={onDelete}
                 onUpdate={onUpdate}
+                onFilter={onFilter}
               />
             </div>
           </div>
