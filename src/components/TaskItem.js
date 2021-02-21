@@ -23,7 +23,11 @@ const TaskItem = (props) => {
           <span className="fa fa-pencil mr-5"></span>Sửa
         </button>
         &nbsp;
-        <button type="button" className="btn btn-danger">
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={() => props.onDelete(props.task.id)}
+        >
           <span className="fa fa-trash mr-5"></span>Xóa
         </button>
       </td>

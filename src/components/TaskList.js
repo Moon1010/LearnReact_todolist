@@ -9,6 +9,7 @@ const TaskList = (props) => {
         index={index}
         task={task}
         onUpdateStatus={props.onUpdateStatus}
+        onDelete={props.onDelete}
       />
     );
   });

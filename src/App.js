@@ -90,6 +90,18 @@ function App() {
     return result;
   };
 
+  const onDelete = (id) => {
+    let tasks = allState;
+    let index = findIndexState(id);
+    if (index !== -1) {
+      tasks.splice(index, 1);
+      setAllState(tasks);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    onCloseForm();
+  };
+
   return (
     <div className="container">
       <div className="text-center">
@@ -126,7 +138,11 @@ function App() {
           <Control />
           <div className="row mt-15">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              <TaskList tasks={allState} onUpdateStatus={onUpdateStatus} />
+              <TaskList
+                tasks={allState}
+                onUpdateStatus={onUpdateStatus}
+                onDelete={onDelete}
+              />
             </div>
           </div>
         </div>
