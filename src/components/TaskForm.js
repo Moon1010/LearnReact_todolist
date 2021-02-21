@@ -1,9 +1,16 @@
 import React from "react";
-const TaskForm = () => {
+const TaskForm = (props) => {
   return (
     <div className="panel panel-warning">
       <div className="panel-heading">
-        <h3 className="panel-title">Thêm Công Việc</h3>
+        <h3 className="panel-title">
+          Thêm Công Việc
+          <span
+            className="fa fa-times-circle text-right"
+            style={{ float: "right", cursor: "pointer" }}
+            onClick={() => props.onCloseForm()}
+          ></span>
+        </h3>
       </div>
       <div className="panel-body">
         <form>

@@ -1,7 +1,10 @@
 import React from "react";
 import TaskItem from "./TaskItem";
 
-const TaskList = () => {
+const TaskList = (props) => {
+  const itemTasks = props.tasks.map((task, index) => {
+    return <TaskItem key={task.id} index={index} task={task} />;
+  });
   return (
     <table className="table table-bordered table-hover mt-15">
       <thead>
@@ -27,11 +30,7 @@ const TaskList = () => {
           </td>
           <td></td>
         </tr>
-        <TaskItem />
-        <TaskItem />
-        <TaskItem />
-        <TaskItem />
-        <TaskItem />
+        {itemTasks}
       </tbody>
     </table>
   );

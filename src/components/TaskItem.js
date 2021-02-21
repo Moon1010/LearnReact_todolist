@@ -1,12 +1,20 @@
 import React from "react";
 
-const TaskItem = () => {
+const TaskItem = (props) => {
   return (
     <tr>
-      <td>1</td>
-      <td>Học lập trình</td>
+      <td>{props.index + 1}</td>
+      <td>{props.task.name}</td>
       <td className="text-center">
-        <span className="label label-success">Kích Hoạt</span>
+        <span
+          className={
+            props.task.status === true
+              ? "label label-danger"
+              : "label label-success"
+          }
+        >
+          {props.task.status === true ? "Kích hoạt" : "Ẩn"}
+        </span>
       </td>
       <td className="text-center">
         <button type="button" className="btn btn-warning">
