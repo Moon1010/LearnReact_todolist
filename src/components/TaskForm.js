@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const TaskForm = (props) => {
   const [allState, setAllState] = useState({
+    id: "",
     name: "",
     status: false,
   });
@@ -27,16 +28,24 @@ const TaskForm = (props) => {
   const onClear = (event) => {
     // event.preventDefault();
     setAllState({
+      id: "",
       name: "",
       status: false,
     });
   };
 
+  useEffect(() => {
+    if (Object.keys(props.task).length) {
+      setAllState(props.task);
+    }
+    console.log(allState);
+  }, [props.task]);
+
   return (
     <div className="panel panel-warning">
       <div className="panel-heading">
         <h3 className="panel-title">
-          Thêm Công Việc
+          {props.task.id ? "Cập nhật công việc" : "Thêm Công Việc"}
           <span
             className="fa fa-times-circle text-right"
             style={{ float: "right", cursor: "pointer" }}
@@ -52,7 +61,7 @@ const TaskForm = (props) => {
               type="text"
               className="form-control"
               name="name"
-              value={allState.name}
+              value={props.task.id ? allState.name : ""}
               onChange={onChangeForm}
             />
           </div>
@@ -61,7 +70,7 @@ const TaskForm = (props) => {
             className="form-control"
             required="required"
             name="status"
-            value={allState.status}
+            value={props.task.id ? allState.status : false}
             onChange={onChangeForm}
           >
             <option value={true}>Kích Hoạt</option>

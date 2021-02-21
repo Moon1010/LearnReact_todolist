@@ -7,6 +7,12 @@ import TaskItem from "./components/TaskItem";
 
 function App() {
   const [allState, setAllState] = useState([]);
+  const [editState, setEditState] = useState({});
+  // ({
+  //   id: "",
+  //   name: "",
+  //   status: true,
+  // });
   const [isDisplayForm, setIsDisplayForm] = useState(false);
   const s4 = () => {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -49,25 +55,48 @@ function App() {
 
   const onCloseForm = () => {
     setIsDisplayForm(false);
+    setEditState({
+      id: "",
+      name: "",
+      status: true,
+    });
+  };
+
+  const onShowForm = () => {
+    setIsDisplayForm(true);
   };
 
   const onSubmitForm = (data) => {
-    data.id = generateID();
     const tasks = allState;
-    tasks.push(data);
+
+    if (data.id) {
+      const index = findIndexState(data.id);
+      tasks[index].name = data.name;
+      tasks[index].status = data.status;
+    } else {
+      data.id = generateID();
+      tasks.push(data);
+    }
     setAllState(tasks);
-    console.log(allState);
     localStorage.setItem("tasks", JSON.stringify(tasks));
   };
 
   const elmTaskForm = isDisplayForm ? (
-    <TaskForm onCloseForm={onCloseForm} onSubmit={onSubmitForm} />
+    <TaskForm
+      onCloseForm={onCloseForm}
+      onSubmit={onSubmitForm}
+      task={editState}
+    />
   ) : (
     ""
   );
 
   const onToggleForm = () => {
-    setIsDisplayForm(!isDisplayForm);
+    if (Object.keys(editState).length) {
+    } else {
+      setIsDisplayForm(!isDisplayForm);
+    }
+    setEditState({});
   };
 
   const onUpdateStatus = (id) => {
@@ -100,6 +129,14 @@ function App() {
     }
 
     onCloseForm();
+  };
+
+  const onUpdate = (id) => {
+    onShowForm();
+    let tasks = allState;
+    let index = findIndexState(id);
+    let editTask = tasks[index];
+    setEditState(editTask);
   };
 
   return (
@@ -142,6 +179,7 @@ function App() {
                 tasks={allState}
                 onUpdateStatus={onUpdateStatus}
                 onDelete={onDelete}
+                onUpdate={onUpdate}
               />
             </div>
           </div>
