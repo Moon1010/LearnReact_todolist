@@ -51,8 +51,17 @@ function App() {
     setIsDisplayForm(false);
   };
 
+  const onSubmitForm = (data) => {
+    data.id = generateID();
+    const tasks = allState;
+    tasks.push(data);
+    setAllState(tasks);
+    console.log(allState);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  };
+
   const elmTaskForm = isDisplayForm ? (
-    <TaskForm onCloseForm={onCloseForm} />
+    <TaskForm onCloseForm={onCloseForm} onSubmit={onSubmitForm} />
   ) : (
     ""
   );
