@@ -161,9 +161,38 @@ function App() {
     });
   }
 
+  if (keyWord) {
+    tasks = tasks.filter((task) => {
+      return task.name.toLowerCase().indexOf(keyWord.toLowerCase()) !== -1;
+    });
+  }
+
   const onSearch = (keyword) => {
-    console.log(keyword);
+    setKeyWord(keyword);
   };
+
+  const [sortState, setSortState] = useState({
+    by: "name",
+    value: 1,
+  });
+
+  const onSort = (sort) => {
+    setSortState(sort);
+  };
+
+  if (sortState.by === "name") {
+    allState.sort((a, b) => {
+      if (a.name > b.name) return sortState.value;
+      else if (a.name < b.name) return -sortState.value;
+      else return 0;
+    });
+  } else {
+    allState.sort((a, b) => {
+      if (a.status > b.status) return -sortState.value;
+      else if (a.status < b.status) return sortState.value;
+      else return 0;
+    });
+  }
 
   return (
     <div className="container">
@@ -198,7 +227,7 @@ function App() {
           >
             Generate
           </button>
-          <Control onSearch={onSearch} />
+          <Control onSearch={onSearch} onSort={onSort} sort={sortState} />
           <div className="row mt-15">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               <TaskList

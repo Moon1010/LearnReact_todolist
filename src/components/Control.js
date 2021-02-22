@@ -6,7 +6,7 @@ const Control = (props) => {
   return (
     <div className="row mt-15">
       <Search onSearch={props.onSearch} />
-      <Sort />
+      <Sort onSort={props.onSort} sort={props.sort} />
     </div>
   );
 };
